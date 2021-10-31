@@ -1,0 +1,66 @@
+<body class="body">
+  <center>
+    <img src="books.png" alt="Books" width="100" height="100"
+  </center>
+  <form>
+  <h1>UniBook Push Service</h1>
+    <label for="push">Send a notification:</label><br/>
+    <textarea id="push" name="pushmessage" rows="4" cols="50"></textarea>
+    <br/>
+    <br/>
+      <input class="btn" onclick="sendPush()" type="button" value="Push">
+       <div><p id = "response"></p></div>
+</form>
+
+<script>
+function sendPush(){
+    var message = document.getElementById("push");
+    fetch("/push/?message=" + message.value, {
+      method: "GET",
+    })
+      .then((response) => {
+        if (response.status !== 200) {
+          throw response.statusText;
+        } else return response;
+      })
+      .then(function(response) {
+        var text = document.getElementById("response")
+        text.innerHTML = response.statusText
+        //response.json()
+      });
+  }
+</script>
+
+<style>
+.body{
+  color:white;
+  background-color:#122166;
+  margin-top:10%;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.btn {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #c24848;
+  border: none;
+  border-radius:40px;
+  box-shadow: 0 9px #999;
+}
+
+.btn:hover {background-color: #ad4848;}
+
+.btn:active {
+  background-color: #c24848;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+
+}
+</style>
+</body>
